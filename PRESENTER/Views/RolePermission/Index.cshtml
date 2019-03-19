@@ -1,0 +1,106 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section ng-app="RolePermissionApplication" ng-controller="RolePermissionApplicationController">
+
+    <div class="container-fluid border mb-2">
+        <div class="m-2" ng-init="GetComboApplication()">
+            <div class="form-group">
+                <label for="ApplicationSelect">Application</label>
+                <select class="form-control" id="ApplicationSelect"
+                        ng-model="APPLICATION"
+                        ng-options="o.APP_NAME for o in LIST_COMBO_APPLICATION track by o.APP_ID"
+                        ng-change="ComboApplicationChange()"></select>
+            </div>
+        </div>
+
+        <div class="m-2">
+            <div class="form-group">
+                <label for="ApplicationSelect">Role</label>
+                <select class="form-control" id="ApplicationSelect"
+                        ng-model="ROLE"
+                        ng-options="o.ROLE_NAME for o in LIST_COMBO_ROLE track by o.ROLE_ID"
+                        ng-change="ComboRoleChange()"></select>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid border mb-2" id="mainContent">
+        <div class="m-2">
+            <table id="tableRolePermission" class="cell-border compact stripe"></table>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalRolePermission" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">{{ROLE_PERMISSION.MENU_NAME}}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-check" id="frmGrant">
+                        <input class="form-check-input" type="checkbox" onchange="GrantChange()" value="Y" id="chkGrant">
+                        <script>
+                            function GrantChange() {
+                                debugger;
+                                if ($('#chkGrant').is(':checked')) {
+                                    $('#chkView').prop('checked', true);
+                                    $('#chkInsert').prop('checked', true);
+                                    $('#chkUpdate').prop('checked', true);
+                                    $('#chkDelete').prop('checked', true);
+
+                                }
+                                else {
+                                    $('#chkView').prop('checked', false);
+                                    $('#chkInsert').prop('checked', false);
+                                    $('#chkUpdate').prop('checked', false);
+                                    $('#chkDelete').prop('checked', false);
+                                }
+                            }
+                        </script>
+                        <label class="form-check-label" for="chkGrant">
+                            Grant
+                        </label>
+                    </div>
+                    <div class="form-check" id="frmView">
+                        <input class="form-check-input" type="checkbox" value="Y" id="chkView">
+                        <label class="form-check-label" for="chkView">
+                            View
+                        </label>
+                    </div>
+                    <div class="form-check" id="frmInsert">
+                        <input class="form-check-input" type="checkbox" value="Y" id="chkInsert">
+                        <label class="form-check-label" for="chkInsert">
+                            Insert
+                        </label>
+                    </div>
+                    <div class="form-check" id="frmUpdate">
+                        <input class="form-check-input" type="checkbox" value="Y" id="chkUpdate">
+                        <label class="form-check-label" for="chkUpdate">
+                            Update
+                        </label>
+                    </div>
+                    <div class="form-check" id="frmDelete">
+                        <input class="form-check-input" type="checkbox" value="" id="chkDelete">
+                        <label class="form-check-label" for="chkDelete">
+                            Delete
+                        </label>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" ng-click="UpdateRolePermissionConfirm()">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+

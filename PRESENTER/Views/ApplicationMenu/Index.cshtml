@@ -1,0 +1,172 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section ng-app="ApplicationMenu" ng-controller="ApplicationMenuController" ng-init="GetApplicationMenuTreeview()">
+    <div class="container-fluid border mb-2" id="searchBar">
+        <div class="m-1" ng-init="GetComboApplication()">
+            <div class="form-group">
+                <label for="ApplicationSelect">Application</label>
+                <select class="form-control" id="ApplicationSelect"
+                        ng-model="APPLICATION"
+                        ng-options="o.APP_NAME for o in LIST_COMBO_APPLICATION track by o.APP_ID"
+                        ng-change="ComboApplicationChange()"></select>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container-fluid border mb-2" id="searchBar">
+        <div class="m-1">
+            <button type="button" id="btnAddSub" ng-click="AddSubMenu()" class="btn btn-primary"><i class="fa fa-search"></i> Add Sub Menu</button>
+            <button type="button" id="btnEdit"ng-click="UpdateMenu()" class="btn btn-info"><i class="fa fa-search"></i> Edit</button>
+            <button type="button" id="btnDelete" ng-click="DeleteMenu()" class="btn btn-danger"><i class="fa fa-window-close"></i> Delete</button>
+        </div>
+    </div>
+
+    <div class="container-fluid border mb-2" id="searchBar">
+        <div class="m-2">
+            <div id="jstree_demo_div">
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalAddMenu" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add Menu</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="exampleFormControlInput1">Application Name</label>
+                            <input type="text" class="form-control" ng-model="APP_SELECTED_NAME">
+                            <label for="exampleFormControlInput1">Parent Menu</label>
+                            <input type="text" class="form-control" ng-model="_PARENT_MENU_NAME">
+                            <label for="exampleFormControlInput1">Menu Name</label>
+                            <input type="text" class="form-control" ng-model="_MENU_NAME">
+                            <label for="exampleFormControlInput1">Menu Level</label>
+                            <input type="number" class="form-control" ng-model="_MENU_LEVEL">
+                            <label for="exampleFormControlInput1">Menu Sequence</label>
+                            <input type="number" class="form-control" ng-model="_MENU_SEQ">
+                            <label for="exampleFormControlInput1">Status</label>
+                            <div class="form-check">
+                                <input class="form-check-input" name="MENU_STATUS" id="MENU_STATUS" type="radio" value="1" checked>
+                                <label class="form-check-label" for="defaultCheck1">
+                                    Active
+                                </label>
+                                <br>
+                                <input class="form-check-input" name="MENU_STATUS" id="MENU_STATUS" value="0" type="radio">
+                                <label class="form-check-label" for="defaultCheck1">
+                                    Inactive
+                                </label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-click="AddSubMenuConfirm()">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalEditMenu" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Menu</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="exampleFormControlInput1">Application Name</label>
+                            <input type="text" class="form-control" ng-model="APP_SELECTED_NAME">
+                            <label for="exampleFormControlInput1">Parent Menu</label>
+                            <input type="text" class="form-control" ng-model="PARENT_MENU_NAME">
+                            <label for="exampleFormControlInput1">Menu Name</label>
+                            <input type="text" class="form-control" ng-model="MENU_NAME">
+                            <label for="exampleFormControlInput1">Menu Level</label>
+                            <input type="number" class="form-control" ng-model="MENU_LEVEL">
+                            <label for="exampleFormControlInput1">Menu Sequence</label>
+                            <input type="number" class="form-control" ng-model="MENU_SEQ">
+                            <label for="exampleFormControlInput1">Status</label>
+                            <div class="form-check">
+                                <input class="form-check-input" name="MENU_STATUS" id="MENU_STATUS_1" type="radio" value="1" checked>
+                                <label class="form-check-label" for="defaultCheck1">
+                                    Active
+                                </label>
+                                <br>
+                                <input class="form-check-input" name="MENU_STATUS" id="MENU_STATUS_0" value="0" type="radio">
+                                <label class="form-check-label" for="defaultCheck1">
+                                    Inactive
+                                </label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-click="UpdateMenuConfirm()">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalSaveSuccess" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Message</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Save Success
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalDeleteMenu" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Message</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Do you want to delete menu : {{_PARENT_MENU_NAME}} ?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" ng-click="DeleteMenuConfirm()" class="btn btn-secondary" data-dismiss="modal">Confirm</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</section>
+
+
+

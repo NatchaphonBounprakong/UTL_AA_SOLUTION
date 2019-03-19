@@ -1,0 +1,135 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section ng-app="Application" ng-controller="ApplicationController" ng-init="GetListApplication()">
+
+    <div class="container-fluid border mb-2" id="searchBar">
+        <div class="m-1">
+            <div class="form-group">
+                <label for="exampleInputEmail1">Search</label>
+                <input type="text" class="form-control" id="txtAppName" value="{{FILTER_APP_NAME}}" ng-model="FILTER_APP_NAME" placeholder="Application Name">
+            </div>
+            <button type="button" class="btn btn-info align-right" ng-click="GetListApplication()"><i class="fa fa-search"></i>Search</button>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalAddApp"><i class="fa fa-plus"></i>Add Aplication</button>
+        </div>
+    </div>
+
+    <div class="container-fluid border mb-2" id="mainContent">
+        <div class="m-2">
+            <table id="tableApplication" class="cell-border compact stripe"></table>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalAddApp" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add Application</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="exampleFormControlInput1">Application Name</label>
+                            <input type="text" class="form-control" ng-model="APP_NAME">
+                            <label for="exampleFormControlInput1">Application Code</label>
+                            <input type="text" class="form-control" ng-model="APP_CODE">
+                            <label for="exampleFormControlInput1">Description</label>
+                            <input type="text" class="form-control" ng-model="APP_DESCRIPTION">
+                            <label for="exampleFormControlInput1">URL</label>
+                            <input type="text" class="form-control" ng-model="APP_URL">
+                            <label for="exampleFormControlInput1">Status</label>
+                            <div class="form-check">
+                                <input class="form-check-input" name="APP_STATUS" id="APP_STATUS" type="radio" value="1" checked>
+                                <label class="form-check-label" for="defaultCheck1">
+                                    Active
+                                </label>
+                                <br>
+                                <input class="form-check-input" name="APP_STATUS" id="APP_STATUS" value="0" type="radio">
+                                <label class="form-check-label" for="defaultCheck1">
+                                    Inactive
+                                </label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-click="AddApplication()">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalUpdateApp" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Update Application</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="exampleFormControlInput1">Application Name</label>
+                            <input type="text" class="form-control" ng-model="_APP_NAME">
+                            <label for="exampleFormControlInput1">Application Code</label>
+                            <input type="text" class="form-control" ng-model="_APP_CODE">
+                            <label for="exampleFormControlInput1">Description</label>
+                            <input type="text" class="form-control" ng-model="_APP_DESCRIPTION">
+                            <label for="exampleFormControlInput1">URL</label>
+                            <input type="text" class="form-control" ng-model="_APP_URL">
+                            <label for="exampleFormControlInput1">Status</label>
+                            <div class="form-check">
+                                <input class="form-check-input" name="_APP_STATUS" id="_APP_STATUS_1" type="radio" value="1">
+                                <label class="form-check-label" for="defaultCheck1">
+                                    Active
+                                </label>
+                                <br>
+                                <input class="form-check-input" name="_APP_STATUS" id="_APP_STATUS_0" value="0" type="radio">
+                                <label class="form-check-label" for="defaultCheck1">
+                                    Inactive
+                                </label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-click="UpdateApplication()">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalSaveSuccess" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Message</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Save Success
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</section>
+

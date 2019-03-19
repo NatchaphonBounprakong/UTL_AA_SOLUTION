@@ -1,0 +1,692 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="UTL_AAModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="APPLICATION_MENUS">
+          <Key>
+            <PropertyRef Name="MENU_ID" />
+          </Key>
+          <Property Name="MENU_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PARENT_ID" Type="int" />
+          <Property Name="APP_ID" Type="int" Nullable="false" />
+          <Property Name="MENU_NAME" Type="nvarchar" MaxLength="50" />
+          <Property Name="MENU_STATUS" Type="int" />
+          <Property Name="MENU_LEVEL" Type="int" />
+          <Property Name="MENU_SEQ" Type="int" />
+        </EntityType>
+        <EntityType Name="APPLICATION_PERMISISONS">
+          <Key>
+            <PropertyRef Name="APP_PERMISSION_ID" />
+          </Key>
+          <Property Name="APP_PERMISSION_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="APP_ID" Type="int" Nullable="false" />
+          <Property Name="EMPLOYEE_ID" Type="int" Nullable="false" />
+          <Property Name="APP_PERMISISON_ALLOWED" Type="nvarchar" MaxLength="50" />
+          <Property Name="APP_PERMISSION_MAX_SESSION" Type="nvarchar" MaxLength="50" />
+          <Property Name="APP_PERMISSION_DESCRIPTION" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="APPLICATIONS">
+          <Key>
+            <PropertyRef Name="APP_ID" />
+          </Key>
+          <Property Name="APP_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="APP_NAME" Type="nvarchar" MaxLength="50" />
+          <Property Name="APP_URL" Type="nvarchar" MaxLength="50" />
+          <Property Name="APP_DESCRIPTION" Type="nvarchar" MaxLength="50" />
+          <Property Name="APP_STATUS" Type="int" />
+          <Property Name="APP_CODE" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="EMPLOYEE_DENIED_PERMISSION">
+          <Key>
+            <PropertyRef Name="DENIED_ID" />
+          </Key>
+          <Property Name="DENIED_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EMPLOYEE_ID" Type="int" Nullable="false" />
+          <Property Name="MENU_ID" Type="int" Nullable="false" />
+          <Property Name="PERMISSION_CODE" Type="nchar" MaxLength="10" />
+          <Property Name="DENIED_PERMISSION_DENIED" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="EMPLOYEES">
+          <Key>
+            <PropertyRef Name="EMPLOYEE_ID" />
+          </Key>
+          <Property Name="EMPLOYEE_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EMPLOYEE_FIRST_NAME" Type="nvarchar" MaxLength="50" />
+          <Property Name="EMPLOYEE_LAST_NAME" Type="nvarchar" MaxLength="50" />
+          <Property Name="EMPLOYEE_DISPLAY_NAME" Type="nvarchar" MaxLength="50" />
+          <Property Name="EMPLOYEE_STATUS" Type="nvarchar" MaxLength="50" />
+          <Property Name="EMPLOYEE_DEPARTMENT" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="PERMISSIONS">
+          <Key>
+            <PropertyRef Name="PERMISSION_CODE" />
+          </Key>
+          <Property Name="PERMISSION_CODE" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="PERMISSION_DESCRIPTION" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="ROLE">
+          <Key>
+            <PropertyRef Name="ROLE_ID" />
+          </Key>
+          <Property Name="ROLE_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="APP_ID" Type="int" Nullable="false" />
+          <Property Name="ROLE_NAME" Type="nchar" MaxLength="10" />
+          <Property Name="ROLE_DESCRIPTION" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="ROLE_PERMISSION_ALLOWED">
+          <Key>
+            <PropertyRef Name="ROLE_PERMISSION_ID" />
+          </Key>
+          <Property Name="ROLE_PERMISSION_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ROLE_ID" Type="int" Nullable="false" />
+          <Property Name="MENU_ID" Type="int" Nullable="false" />
+          <Property Name="GRANT_PERMISSION" Type="nchar" MaxLength="1" />
+          <Property Name="VIEW_PERMISSION" Type="nchar" MaxLength="1" />
+          <Property Name="INSERT_PERMISSION" Type="nchar" MaxLength="1" />
+          <Property Name="UPDATE_PERMISSION" Type="nchar" MaxLength="1" />
+          <Property Name="DELETE_PERMISSION" Type="nchar" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="USER_ROLES">
+          <Key>
+            <PropertyRef Name="USER_ROLE_ID" />
+          </Key>
+          <Property Name="USER_ROLE_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EMPLOYEE_ID" Type="int" Nullable="false" />
+          <Property Name="ROLE_ID" Type="int" Nullable="false" />
+          <Property Name="USER_ROLE_ALLOWED" Type="nchar" MaxLength="1" />
+        </EntityType>
+        <Association Name="FK_APPLICATION_MENUS_APPLICATION_MENUS">
+          <End Role="APPLICATION_MENUS" Type="Self.APPLICATION_MENUS" Multiplicity="0..1" />
+          <End Role="APPLICATION_MENUS1" Type="Self.APPLICATION_MENUS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="APPLICATION_MENUS">
+              <PropertyRef Name="MENU_ID" />
+            </Principal>
+            <Dependent Role="APPLICATION_MENUS1">
+              <PropertyRef Name="PARENT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_APPLICATION_MENUS_APPLICATIONS">
+          <End Role="APPLICATIONS" Type="Self.APPLICATIONS" Multiplicity="1" />
+          <End Role="APPLICATION_MENUS" Type="Self.APPLICATION_MENUS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="APPLICATIONS">
+              <PropertyRef Name="APP_ID" />
+            </Principal>
+            <Dependent Role="APPLICATION_MENUS">
+              <PropertyRef Name="APP_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_APPLICATION_PERMISISONS_APPLICATIONS">
+          <End Role="APPLICATIONS" Type="Self.APPLICATIONS" Multiplicity="1" />
+          <End Role="APPLICATION_PERMISISONS" Type="Self.APPLICATION_PERMISISONS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="APPLICATIONS">
+              <PropertyRef Name="APP_ID" />
+            </Principal>
+            <Dependent Role="APPLICATION_PERMISISONS">
+              <PropertyRef Name="APP_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_APPLICATION_PERMISISONS_EMPLOYEES">
+          <End Role="EMPLOYEES" Type="Self.EMPLOYEES" Multiplicity="1" />
+          <End Role="APPLICATION_PERMISISONS" Type="Self.APPLICATION_PERMISISONS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLOYEES">
+              <PropertyRef Name="EMPLOYEE_ID" />
+            </Principal>
+            <Dependent Role="APPLICATION_PERMISISONS">
+              <PropertyRef Name="EMPLOYEE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EMPLOYEE_DENIED_PERMISSION_APPLICATION_MENUS">
+          <End Role="APPLICATION_MENUS" Type="Self.APPLICATION_MENUS" Multiplicity="1" />
+          <End Role="EMPLOYEE_DENIED_PERMISSION" Type="Self.EMPLOYEE_DENIED_PERMISSION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="APPLICATION_MENUS">
+              <PropertyRef Name="MENU_ID" />
+            </Principal>
+            <Dependent Role="EMPLOYEE_DENIED_PERMISSION">
+              <PropertyRef Name="MENU_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EMPLOYEE_DENIED_PERMISSION_EMPLOYEES">
+          <End Role="EMPLOYEES" Type="Self.EMPLOYEES" Multiplicity="1" />
+          <End Role="EMPLOYEE_DENIED_PERMISSION" Type="Self.EMPLOYEE_DENIED_PERMISSION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLOYEES">
+              <PropertyRef Name="EMPLOYEE_ID" />
+            </Principal>
+            <Dependent Role="EMPLOYEE_DENIED_PERMISSION">
+              <PropertyRef Name="EMPLOYEE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ROLE_PERMISSION_ALLOWED_APPLICATION_MENUS">
+          <End Role="APPLICATION_MENUS" Type="Self.APPLICATION_MENUS" Multiplicity="1" />
+          <End Role="ROLE_PERMISSION_ALLOWED" Type="Self.ROLE_PERMISSION_ALLOWED" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="APPLICATION_MENUS">
+              <PropertyRef Name="MENU_ID" />
+            </Principal>
+            <Dependent Role="ROLE_PERMISSION_ALLOWED">
+              <PropertyRef Name="MENU_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ROLE_PERMISSION_ALLOWED_ROLE">
+          <End Role="ROLE" Type="Self.ROLE" Multiplicity="1" />
+          <End Role="ROLE_PERMISSION_ALLOWED" Type="Self.ROLE_PERMISSION_ALLOWED" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ROLE">
+              <PropertyRef Name="ROLE_ID" />
+            </Principal>
+            <Dependent Role="ROLE_PERMISSION_ALLOWED">
+              <PropertyRef Name="ROLE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_USER_ROLES_EMPLOYEES">
+          <End Role="EMPLOYEES" Type="Self.EMPLOYEES" Multiplicity="1" />
+          <End Role="USER_ROLES" Type="Self.USER_ROLES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLOYEES">
+              <PropertyRef Name="EMPLOYEE_ID" />
+            </Principal>
+            <Dependent Role="USER_ROLES">
+              <PropertyRef Name="EMPLOYEE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_USER_ROLES_ROLES">
+          <End Role="ROLE" Type="Self.ROLE" Multiplicity="1" />
+          <End Role="USER_ROLES" Type="Self.USER_ROLES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ROLE">
+              <PropertyRef Name="ROLE_ID" />
+            </Principal>
+            <Dependent Role="USER_ROLES">
+              <PropertyRef Name="ROLE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="UTL_AAModelStoreContainer">
+          <EntitySet Name="APPLICATION_MENUS" EntityType="Self.APPLICATION_MENUS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="APPLICATION_PERMISISONS" EntityType="Self.APPLICATION_PERMISISONS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="APPLICATIONS" EntityType="Self.APPLICATIONS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EMPLOYEE_DENIED_PERMISSION" EntityType="Self.EMPLOYEE_DENIED_PERMISSION" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EMPLOYEES" EntityType="Self.EMPLOYEES" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PERMISSIONS" EntityType="Self.PERMISSIONS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ROLE" EntityType="Self.ROLE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ROLE_PERMISSION_ALLOWED" EntityType="Self.ROLE_PERMISSION_ALLOWED" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="USER_ROLES" EntityType="Self.USER_ROLES" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_APPLICATION_MENUS_APPLICATION_MENUS" Association="Self.FK_APPLICATION_MENUS_APPLICATION_MENUS">
+            <End Role="APPLICATION_MENUS" EntitySet="APPLICATION_MENUS" />
+            <End Role="APPLICATION_MENUS1" EntitySet="APPLICATION_MENUS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_APPLICATION_MENUS_APPLICATIONS" Association="Self.FK_APPLICATION_MENUS_APPLICATIONS">
+            <End Role="APPLICATIONS" EntitySet="APPLICATIONS" />
+            <End Role="APPLICATION_MENUS" EntitySet="APPLICATION_MENUS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_APPLICATION_PERMISISONS_APPLICATIONS" Association="Self.FK_APPLICATION_PERMISISONS_APPLICATIONS">
+            <End Role="APPLICATIONS" EntitySet="APPLICATIONS" />
+            <End Role="APPLICATION_PERMISISONS" EntitySet="APPLICATION_PERMISISONS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_APPLICATION_PERMISISONS_EMPLOYEES" Association="Self.FK_APPLICATION_PERMISISONS_EMPLOYEES">
+            <End Role="EMPLOYEES" EntitySet="EMPLOYEES" />
+            <End Role="APPLICATION_PERMISISONS" EntitySet="APPLICATION_PERMISISONS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EMPLOYEE_DENIED_PERMISSION_APPLICATION_MENUS" Association="Self.FK_EMPLOYEE_DENIED_PERMISSION_APPLICATION_MENUS">
+            <End Role="APPLICATION_MENUS" EntitySet="APPLICATION_MENUS" />
+            <End Role="EMPLOYEE_DENIED_PERMISSION" EntitySet="EMPLOYEE_DENIED_PERMISSION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EMPLOYEE_DENIED_PERMISSION_EMPLOYEES" Association="Self.FK_EMPLOYEE_DENIED_PERMISSION_EMPLOYEES">
+            <End Role="EMPLOYEES" EntitySet="EMPLOYEES" />
+            <End Role="EMPLOYEE_DENIED_PERMISSION" EntitySet="EMPLOYEE_DENIED_PERMISSION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ROLE_PERMISSION_ALLOWED_APPLICATION_MENUS" Association="Self.FK_ROLE_PERMISSION_ALLOWED_APPLICATION_MENUS">
+            <End Role="APPLICATION_MENUS" EntitySet="APPLICATION_MENUS" />
+            <End Role="ROLE_PERMISSION_ALLOWED" EntitySet="ROLE_PERMISSION_ALLOWED" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ROLE_PERMISSION_ALLOWED_ROLE" Association="Self.FK_ROLE_PERMISSION_ALLOWED_ROLE">
+            <End Role="ROLE" EntitySet="ROLE" />
+            <End Role="ROLE_PERMISSION_ALLOWED" EntitySet="ROLE_PERMISSION_ALLOWED" />
+          </AssociationSet>
+          <AssociationSet Name="FK_USER_ROLES_EMPLOYEES" Association="Self.FK_USER_ROLES_EMPLOYEES">
+            <End Role="EMPLOYEES" EntitySet="EMPLOYEES" />
+            <End Role="USER_ROLES" EntitySet="USER_ROLES" />
+          </AssociationSet>
+          <AssociationSet Name="FK_USER_ROLES_ROLES" Association="Self.FK_USER_ROLES_ROLES">
+            <End Role="ROLE" EntitySet="ROLE" />
+            <End Role="USER_ROLES" EntitySet="USER_ROLES" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="UTL_AAModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="APPLICATION_MENUS">
+          <Key>
+            <PropertyRef Name="MENU_ID" />
+          </Key>
+          <Property Name="MENU_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PARENT_ID" Type="Int32" />
+          <Property Name="APP_ID" Type="Int32" Nullable="false" />
+          <Property Name="MENU_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MENU_STATUS" Type="Int32" />
+          <Property Name="MENU_LEVEL" Type="Int32" />
+          <Property Name="MENU_SEQ" Type="Int32" />
+          <NavigationProperty Name="APPLICATION_MENUS1" Relationship="Self.FK_APPLICATION_MENUS_APPLICATION_MENUS" FromRole="APPLICATION_MENUS" ToRole="APPLICATION_MENUS1" />
+          <NavigationProperty Name="APPLICATION_MENUS2" Relationship="Self.FK_APPLICATION_MENUS_APPLICATION_MENUS" FromRole="APPLICATION_MENUS1" ToRole="APPLICATION_MENUS" />
+          <NavigationProperty Name="APPLICATIONS" Relationship="Self.FK_APPLICATION_MENUS_APPLICATIONS" FromRole="APPLICATION_MENUS" ToRole="APPLICATIONS" />
+          <NavigationProperty Name="EMPLOYEE_DENIED_PERMISSION" Relationship="Self.FK_EMPLOYEE_DENIED_PERMISSION_APPLICATION_MENUS" FromRole="APPLICATION_MENUS" ToRole="EMPLOYEE_DENIED_PERMISSION" />
+          <NavigationProperty Name="ROLE_PERMISSION_ALLOWED" Relationship="Self.FK_ROLE_PERMISSION_ALLOWED_APPLICATION_MENUS" FromRole="APPLICATION_MENUS" ToRole="ROLE_PERMISSION_ALLOWED" />
+        </EntityType>
+        <EntityType Name="APPLICATION_PERMISISONS">
+          <Key>
+            <PropertyRef Name="APP_PERMISSION_ID" />
+          </Key>
+          <Property Name="APP_PERMISSION_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="APP_ID" Type="Int32" Nullable="false" />
+          <Property Name="EMPLOYEE_ID" Type="Int32" Nullable="false" />
+          <Property Name="APP_PERMISISON_ALLOWED" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="APP_PERMISSION_MAX_SESSION" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="APP_PERMISSION_DESCRIPTION" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="APPLICATIONS" Relationship="Self.FK_APPLICATION_PERMISISONS_APPLICATIONS" FromRole="APPLICATION_PERMISISONS" ToRole="APPLICATIONS" />
+          <NavigationProperty Name="EMPLOYEES" Relationship="Self.FK_APPLICATION_PERMISISONS_EMPLOYEES" FromRole="APPLICATION_PERMISISONS" ToRole="EMPLOYEES" />
+        </EntityType>
+        <EntityType Name="APPLICATIONS">
+          <Key>
+            <PropertyRef Name="APP_ID" />
+          </Key>
+          <Property Name="APP_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="APP_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="APP_URL" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="APP_DESCRIPTION" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="APP_STATUS" Type="Int32" />
+          <Property Name="APP_CODE" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="APPLICATION_MENUS" Relationship="Self.FK_APPLICATION_MENUS_APPLICATIONS" FromRole="APPLICATIONS" ToRole="APPLICATION_MENUS" />
+          <NavigationProperty Name="APPLICATION_PERMISISONS" Relationship="Self.FK_APPLICATION_PERMISISONS_APPLICATIONS" FromRole="APPLICATIONS" ToRole="APPLICATION_PERMISISONS" />
+        </EntityType>
+        <EntityType Name="EMPLOYEE_DENIED_PERMISSION">
+          <Key>
+            <PropertyRef Name="DENIED_ID" />
+          </Key>
+          <Property Name="DENIED_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EMPLOYEE_ID" Type="Int32" Nullable="false" />
+          <Property Name="MENU_ID" Type="Int32" Nullable="false" />
+          <Property Name="PERMISSION_CODE" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="DENIED_PERMISSION_DENIED" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="APPLICATION_MENUS" Relationship="Self.FK_EMPLOYEE_DENIED_PERMISSION_APPLICATION_MENUS" FromRole="EMPLOYEE_DENIED_PERMISSION" ToRole="APPLICATION_MENUS" />
+          <NavigationProperty Name="EMPLOYEES" Relationship="Self.FK_EMPLOYEE_DENIED_PERMISSION_EMPLOYEES" FromRole="EMPLOYEE_DENIED_PERMISSION" ToRole="EMPLOYEES" />
+        </EntityType>
+        <EntityType Name="EMPLOYEES">
+          <Key>
+            <PropertyRef Name="EMPLOYEE_ID" />
+          </Key>
+          <Property Name="EMPLOYEE_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EMPLOYEE_FIRST_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EMPLOYEE_LAST_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EMPLOYEE_DISPLAY_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EMPLOYEE_STATUS" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EMPLOYEE_DEPARTMENT" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="APPLICATION_PERMISISONS" Relationship="Self.FK_APPLICATION_PERMISISONS_EMPLOYEES" FromRole="EMPLOYEES" ToRole="APPLICATION_PERMISISONS" />
+          <NavigationProperty Name="EMPLOYEE_DENIED_PERMISSION" Relationship="Self.FK_EMPLOYEE_DENIED_PERMISSION_EMPLOYEES" FromRole="EMPLOYEES" ToRole="EMPLOYEE_DENIED_PERMISSION" />
+          <NavigationProperty Name="USER_ROLES" Relationship="Self.FK_USER_ROLES_EMPLOYEES" FromRole="EMPLOYEES" ToRole="USER_ROLES" />
+        </EntityType>
+        <EntityType Name="PERMISSIONS">
+          <Key>
+            <PropertyRef Name="PERMISSION_CODE" />
+          </Key>
+          <Property Name="PERMISSION_CODE" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="PERMISSION_DESCRIPTION" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ROLE">
+          <Key>
+            <PropertyRef Name="ROLE_ID" />
+          </Key>
+          <Property Name="ROLE_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="APP_ID" Type="Int32" Nullable="false" />
+          <Property Name="ROLE_NAME" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="ROLE_DESCRIPTION" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="ROLE_PERMISSION_ALLOWED" Relationship="Self.FK_ROLE_PERMISSION_ALLOWED_ROLE" FromRole="ROLE" ToRole="ROLE_PERMISSION_ALLOWED" />
+          <NavigationProperty Name="USER_ROLES" Relationship="Self.FK_USER_ROLES_ROLES" FromRole="ROLE" ToRole="USER_ROLES" />
+        </EntityType>
+        <EntityType Name="ROLE_PERMISSION_ALLOWED">
+          <Key>
+            <PropertyRef Name="ROLE_PERMISSION_ID" />
+          </Key>
+          <Property Name="ROLE_PERMISSION_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ROLE_ID" Type="Int32" Nullable="false" />
+          <Property Name="MENU_ID" Type="Int32" Nullable="false" />
+          <Property Name="GRANT_PERMISSION" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
+          <Property Name="VIEW_PERMISSION" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
+          <Property Name="INSERT_PERMISSION" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
+          <Property Name="UPDATE_PERMISSION" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
+          <Property Name="DELETE_PERMISSION" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="APPLICATION_MENUS" Relationship="Self.FK_ROLE_PERMISSION_ALLOWED_APPLICATION_MENUS" FromRole="ROLE_PERMISSION_ALLOWED" ToRole="APPLICATION_MENUS" />
+          <NavigationProperty Name="ROLE" Relationship="Self.FK_ROLE_PERMISSION_ALLOWED_ROLE" FromRole="ROLE_PERMISSION_ALLOWED" ToRole="ROLE" />
+        </EntityType>
+        <EntityType Name="USER_ROLES">
+          <Key>
+            <PropertyRef Name="USER_ROLE_ID" />
+          </Key>
+          <Property Name="USER_ROLE_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EMPLOYEE_ID" Type="Int32" Nullable="false" />
+          <Property Name="ROLE_ID" Type="Int32" Nullable="false" />
+          <Property Name="USER_ROLE_ALLOWED" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="EMPLOYEES" Relationship="Self.FK_USER_ROLES_EMPLOYEES" FromRole="USER_ROLES" ToRole="EMPLOYEES" />
+          <NavigationProperty Name="ROLE" Relationship="Self.FK_USER_ROLES_ROLES" FromRole="USER_ROLES" ToRole="ROLE" />
+        </EntityType>
+        <Association Name="FK_APPLICATION_MENUS_APPLICATION_MENUS">
+          <End Role="APPLICATION_MENUS" Type="Self.APPLICATION_MENUS" Multiplicity="0..1" />
+          <End Role="APPLICATION_MENUS1" Type="Self.APPLICATION_MENUS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="APPLICATION_MENUS">
+              <PropertyRef Name="MENU_ID" />
+            </Principal>
+            <Dependent Role="APPLICATION_MENUS1">
+              <PropertyRef Name="PARENT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_APPLICATION_MENUS_APPLICATIONS">
+          <End Role="APPLICATIONS" Type="Self.APPLICATIONS" Multiplicity="1" />
+          <End Role="APPLICATION_MENUS" Type="Self.APPLICATION_MENUS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="APPLICATIONS">
+              <PropertyRef Name="APP_ID" />
+            </Principal>
+            <Dependent Role="APPLICATION_MENUS">
+              <PropertyRef Name="APP_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EMPLOYEE_DENIED_PERMISSION_APPLICATION_MENUS">
+          <End Role="APPLICATION_MENUS" Type="Self.APPLICATION_MENUS" Multiplicity="1" />
+          <End Role="EMPLOYEE_DENIED_PERMISSION" Type="Self.EMPLOYEE_DENIED_PERMISSION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="APPLICATION_MENUS">
+              <PropertyRef Name="MENU_ID" />
+            </Principal>
+            <Dependent Role="EMPLOYEE_DENIED_PERMISSION">
+              <PropertyRef Name="MENU_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ROLE_PERMISSION_ALLOWED_APPLICATION_MENUS">
+          <End Role="APPLICATION_MENUS" Type="Self.APPLICATION_MENUS" Multiplicity="1" />
+          <End Role="ROLE_PERMISSION_ALLOWED" Type="Self.ROLE_PERMISSION_ALLOWED" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="APPLICATION_MENUS">
+              <PropertyRef Name="MENU_ID" />
+            </Principal>
+            <Dependent Role="ROLE_PERMISSION_ALLOWED">
+              <PropertyRef Name="MENU_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_APPLICATION_PERMISISONS_APPLICATIONS">
+          <End Role="APPLICATIONS" Type="Self.APPLICATIONS" Multiplicity="1" />
+          <End Role="APPLICATION_PERMISISONS" Type="Self.APPLICATION_PERMISISONS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="APPLICATIONS">
+              <PropertyRef Name="APP_ID" />
+            </Principal>
+            <Dependent Role="APPLICATION_PERMISISONS">
+              <PropertyRef Name="APP_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_APPLICATION_PERMISISONS_EMPLOYEES">
+          <End Role="EMPLOYEES" Type="Self.EMPLOYEES" Multiplicity="1" />
+          <End Role="APPLICATION_PERMISISONS" Type="Self.APPLICATION_PERMISISONS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLOYEES">
+              <PropertyRef Name="EMPLOYEE_ID" />
+            </Principal>
+            <Dependent Role="APPLICATION_PERMISISONS">
+              <PropertyRef Name="EMPLOYEE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EMPLOYEE_DENIED_PERMISSION_EMPLOYEES">
+          <End Role="EMPLOYEES" Type="Self.EMPLOYEES" Multiplicity="1" />
+          <End Role="EMPLOYEE_DENIED_PERMISSION" Type="Self.EMPLOYEE_DENIED_PERMISSION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLOYEES">
+              <PropertyRef Name="EMPLOYEE_ID" />
+            </Principal>
+            <Dependent Role="EMPLOYEE_DENIED_PERMISSION">
+              <PropertyRef Name="EMPLOYEE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_USER_ROLES_EMPLOYEES">
+          <End Role="EMPLOYEES" Type="Self.EMPLOYEES" Multiplicity="1" />
+          <End Role="USER_ROLES" Type="Self.USER_ROLES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLOYEES">
+              <PropertyRef Name="EMPLOYEE_ID" />
+            </Principal>
+            <Dependent Role="USER_ROLES">
+              <PropertyRef Name="EMPLOYEE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ROLE_PERMISSION_ALLOWED_ROLE">
+          <End Role="ROLE" Type="Self.ROLE" Multiplicity="1" />
+          <End Role="ROLE_PERMISSION_ALLOWED" Type="Self.ROLE_PERMISSION_ALLOWED" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ROLE">
+              <PropertyRef Name="ROLE_ID" />
+            </Principal>
+            <Dependent Role="ROLE_PERMISSION_ALLOWED">
+              <PropertyRef Name="ROLE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_USER_ROLES_ROLES">
+          <End Role="ROLE" Type="Self.ROLE" Multiplicity="1" />
+          <End Role="USER_ROLES" Type="Self.USER_ROLES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ROLE">
+              <PropertyRef Name="ROLE_ID" />
+            </Principal>
+            <Dependent Role="USER_ROLES">
+              <PropertyRef Name="ROLE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="UTL_AAEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="APPLICATION_MENUS" EntityType="Self.APPLICATION_MENUS" />
+          <EntitySet Name="APPLICATION_PERMISISONS" EntityType="Self.APPLICATION_PERMISISONS" />
+          <EntitySet Name="APPLICATIONS" EntityType="Self.APPLICATIONS" />
+          <EntitySet Name="EMPLOYEE_DENIED_PERMISSION" EntityType="Self.EMPLOYEE_DENIED_PERMISSION" />
+          <EntitySet Name="EMPLOYEES" EntityType="Self.EMPLOYEES" />
+          <EntitySet Name="PERMISSIONS" EntityType="Self.PERMISSIONS" />
+          <EntitySet Name="ROLE" EntityType="Self.ROLE" />
+          <EntitySet Name="ROLE_PERMISSION_ALLOWED" EntityType="Self.ROLE_PERMISSION_ALLOWED" />
+          <EntitySet Name="USER_ROLES" EntityType="Self.USER_ROLES" />
+          <AssociationSet Name="FK_APPLICATION_MENUS_APPLICATION_MENUS" Association="Self.FK_APPLICATION_MENUS_APPLICATION_MENUS">
+            <End Role="APPLICATION_MENUS" EntitySet="APPLICATION_MENUS" />
+            <End Role="APPLICATION_MENUS1" EntitySet="APPLICATION_MENUS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_APPLICATION_MENUS_APPLICATIONS" Association="Self.FK_APPLICATION_MENUS_APPLICATIONS">
+            <End Role="APPLICATIONS" EntitySet="APPLICATIONS" />
+            <End Role="APPLICATION_MENUS" EntitySet="APPLICATION_MENUS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EMPLOYEE_DENIED_PERMISSION_APPLICATION_MENUS" Association="Self.FK_EMPLOYEE_DENIED_PERMISSION_APPLICATION_MENUS">
+            <End Role="APPLICATION_MENUS" EntitySet="APPLICATION_MENUS" />
+            <End Role="EMPLOYEE_DENIED_PERMISSION" EntitySet="EMPLOYEE_DENIED_PERMISSION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ROLE_PERMISSION_ALLOWED_APPLICATION_MENUS" Association="Self.FK_ROLE_PERMISSION_ALLOWED_APPLICATION_MENUS">
+            <End Role="APPLICATION_MENUS" EntitySet="APPLICATION_MENUS" />
+            <End Role="ROLE_PERMISSION_ALLOWED" EntitySet="ROLE_PERMISSION_ALLOWED" />
+          </AssociationSet>
+          <AssociationSet Name="FK_APPLICATION_PERMISISONS_APPLICATIONS" Association="Self.FK_APPLICATION_PERMISISONS_APPLICATIONS">
+            <End Role="APPLICATIONS" EntitySet="APPLICATIONS" />
+            <End Role="APPLICATION_PERMISISONS" EntitySet="APPLICATION_PERMISISONS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_APPLICATION_PERMISISONS_EMPLOYEES" Association="Self.FK_APPLICATION_PERMISISONS_EMPLOYEES">
+            <End Role="EMPLOYEES" EntitySet="EMPLOYEES" />
+            <End Role="APPLICATION_PERMISISONS" EntitySet="APPLICATION_PERMISISONS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EMPLOYEE_DENIED_PERMISSION_EMPLOYEES" Association="Self.FK_EMPLOYEE_DENIED_PERMISSION_EMPLOYEES">
+            <End Role="EMPLOYEES" EntitySet="EMPLOYEES" />
+            <End Role="EMPLOYEE_DENIED_PERMISSION" EntitySet="EMPLOYEE_DENIED_PERMISSION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_USER_ROLES_EMPLOYEES" Association="Self.FK_USER_ROLES_EMPLOYEES">
+            <End Role="EMPLOYEES" EntitySet="EMPLOYEES" />
+            <End Role="USER_ROLES" EntitySet="USER_ROLES" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ROLE_PERMISSION_ALLOWED_ROLE" Association="Self.FK_ROLE_PERMISSION_ALLOWED_ROLE">
+            <End Role="ROLE" EntitySet="ROLE" />
+            <End Role="ROLE_PERMISSION_ALLOWED" EntitySet="ROLE_PERMISSION_ALLOWED" />
+          </AssociationSet>
+          <AssociationSet Name="FK_USER_ROLES_ROLES" Association="Self.FK_USER_ROLES_ROLES">
+            <End Role="ROLE" EntitySet="ROLE" />
+            <End Role="USER_ROLES" EntitySet="USER_ROLES" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="UTL_AAModelStoreContainer" CdmEntityContainer="UTL_AAEntities">
+          <EntitySetMapping Name="APPLICATION_MENUS">
+            <EntityTypeMapping TypeName="UTL_AAModel.APPLICATION_MENUS">
+              <MappingFragment StoreEntitySet="APPLICATION_MENUS">
+                <ScalarProperty Name="MENU_ID" ColumnName="MENU_ID" />
+                <ScalarProperty Name="PARENT_ID" ColumnName="PARENT_ID" />
+                <ScalarProperty Name="APP_ID" ColumnName="APP_ID" />
+                <ScalarProperty Name="MENU_NAME" ColumnName="MENU_NAME" />
+                <ScalarProperty Name="MENU_STATUS" ColumnName="MENU_STATUS" />
+                <ScalarProperty Name="MENU_LEVEL" ColumnName="MENU_LEVEL" />
+                <ScalarProperty Name="MENU_SEQ" ColumnName="MENU_SEQ" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="APPLICATION_PERMISISONS">
+            <EntityTypeMapping TypeName="UTL_AAModel.APPLICATION_PERMISISONS">
+              <MappingFragment StoreEntitySet="APPLICATION_PERMISISONS">
+                <ScalarProperty Name="APP_PERMISSION_ID" ColumnName="APP_PERMISSION_ID" />
+                <ScalarProperty Name="APP_ID" ColumnName="APP_ID" />
+                <ScalarProperty Name="EMPLOYEE_ID" ColumnName="EMPLOYEE_ID" />
+                <ScalarProperty Name="APP_PERMISISON_ALLOWED" ColumnName="APP_PERMISISON_ALLOWED" />
+                <ScalarProperty Name="APP_PERMISSION_MAX_SESSION" ColumnName="APP_PERMISSION_MAX_SESSION" />
+                <ScalarProperty Name="APP_PERMISSION_DESCRIPTION" ColumnName="APP_PERMISSION_DESCRIPTION" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="APPLICATIONS">
+            <EntityTypeMapping TypeName="UTL_AAModel.APPLICATIONS">
+              <MappingFragment StoreEntitySet="APPLICATIONS">
+                <ScalarProperty Name="APP_ID" ColumnName="APP_ID" />
+                <ScalarProperty Name="APP_NAME" ColumnName="APP_NAME" />
+                <ScalarProperty Name="APP_URL" ColumnName="APP_URL" />
+                <ScalarProperty Name="APP_DESCRIPTION" ColumnName="APP_DESCRIPTION" />
+                <ScalarProperty Name="APP_STATUS" ColumnName="APP_STATUS" />
+                <ScalarProperty Name="APP_CODE" ColumnName="APP_CODE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EMPLOYEE_DENIED_PERMISSION">
+            <EntityTypeMapping TypeName="UTL_AAModel.EMPLOYEE_DENIED_PERMISSION">
+              <MappingFragment StoreEntitySet="EMPLOYEE_DENIED_PERMISSION">
+                <ScalarProperty Name="DENIED_ID" ColumnName="DENIED_ID" />
+                <ScalarProperty Name="EMPLOYEE_ID" ColumnName="EMPLOYEE_ID" />
+                <ScalarProperty Name="MENU_ID" ColumnName="MENU_ID" />
+                <ScalarProperty Name="PERMISSION_CODE" ColumnName="PERMISSION_CODE" />
+                <ScalarProperty Name="DENIED_PERMISSION_DENIED" ColumnName="DENIED_PERMISSION_DENIED" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EMPLOYEES">
+            <EntityTypeMapping TypeName="UTL_AAModel.EMPLOYEES">
+              <MappingFragment StoreEntitySet="EMPLOYEES">
+                <ScalarProperty Name="EMPLOYEE_ID" ColumnName="EMPLOYEE_ID" />
+                <ScalarProperty Name="EMPLOYEE_FIRST_NAME" ColumnName="EMPLOYEE_FIRST_NAME" />
+                <ScalarProperty Name="EMPLOYEE_LAST_NAME" ColumnName="EMPLOYEE_LAST_NAME" />
+                <ScalarProperty Name="EMPLOYEE_DISPLAY_NAME" ColumnName="EMPLOYEE_DISPLAY_NAME" />
+                <ScalarProperty Name="EMPLOYEE_STATUS" ColumnName="EMPLOYEE_STATUS" />
+                <ScalarProperty Name="EMPLOYEE_DEPARTMENT" ColumnName="EMPLOYEE_DEPARTMENT" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PERMISSIONS">
+            <EntityTypeMapping TypeName="UTL_AAModel.PERMISSIONS">
+              <MappingFragment StoreEntitySet="PERMISSIONS">
+                <ScalarProperty Name="PERMISSION_CODE" ColumnName="PERMISSION_CODE" />
+                <ScalarProperty Name="PERMISSION_DESCRIPTION" ColumnName="PERMISSION_DESCRIPTION" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ROLE">
+            <EntityTypeMapping TypeName="UTL_AAModel.ROLE">
+              <MappingFragment StoreEntitySet="ROLE">
+                <ScalarProperty Name="ROLE_ID" ColumnName="ROLE_ID" />
+                <ScalarProperty Name="APP_ID" ColumnName="APP_ID" />
+                <ScalarProperty Name="ROLE_NAME" ColumnName="ROLE_NAME" />
+                <ScalarProperty Name="ROLE_DESCRIPTION" ColumnName="ROLE_DESCRIPTION" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ROLE_PERMISSION_ALLOWED">
+            <EntityTypeMapping TypeName="UTL_AAModel.ROLE_PERMISSION_ALLOWED">
+              <MappingFragment StoreEntitySet="ROLE_PERMISSION_ALLOWED">
+                <ScalarProperty Name="ROLE_PERMISSION_ID" ColumnName="ROLE_PERMISSION_ID" />
+                <ScalarProperty Name="ROLE_ID" ColumnName="ROLE_ID" />
+                <ScalarProperty Name="MENU_ID" ColumnName="MENU_ID" />
+                <ScalarProperty Name="GRANT_PERMISSION" ColumnName="GRANT_PERMISSION" />
+                <ScalarProperty Name="VIEW_PERMISSION" ColumnName="VIEW_PERMISSION" />
+                <ScalarProperty Name="INSERT_PERMISSION" ColumnName="INSERT_PERMISSION" />
+                <ScalarProperty Name="UPDATE_PERMISSION" ColumnName="UPDATE_PERMISSION" />
+                <ScalarProperty Name="DELETE_PERMISSION" ColumnName="DELETE_PERMISSION" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="USER_ROLES">
+            <EntityTypeMapping TypeName="UTL_AAModel.USER_ROLES">
+              <MappingFragment StoreEntitySet="USER_ROLES">
+                <ScalarProperty Name="USER_ROLE_ID" ColumnName="USER_ROLE_ID" />
+                <ScalarProperty Name="EMPLOYEE_ID" ColumnName="EMPLOYEE_ID" />
+                <ScalarProperty Name="ROLE_ID" ColumnName="ROLE_ID" />
+                <ScalarProperty Name="USER_ROLE_ALLOWED" ColumnName="USER_ROLE_ALLOWED" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

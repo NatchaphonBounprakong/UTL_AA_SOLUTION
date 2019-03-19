@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="6d3ba7cd6bd04b399d8f94dbd62ad01a" Name="Diagram1" ZoomLevel="100">
+        <EntityTypeShape EntityType="UTL_AAModel1.APPLICATION_MENUS" Width="2.5" PointX="3" PointY="7.75" />
+        <EntityTypeShape EntityType="UTL_AAModel1.APPLICATION_PERMISISONS" Width="1.5" PointX="3" PointY="3.875" />
+        <EntityTypeShape EntityType="UTL_AAModel1.APPLICATIONS" Width="1.875" PointX="0.5" PointY="5.625" />
+        <EntityTypeShape EntityType="UTL_AAModel1.EMPLOYEE_DENIED_PERMISSION" Width="2.625" PointX="6" PointY="7.25" />
+        <EntityTypeShape EntityType="UTL_AAModel1.EMPLOYEES" Width="2.25" PointX="6" PointY="3.5" />
+        <EntityTypeShape EntityType="UTL_AAModel1.PERMISSIONS" Width="1.5" PointX="2.75" PointY="0.875" />
+        <EntityTypeShape EntityType="UTL_AAModel1.ROLE" Width="2" PointX="9.125" PointY="6.25" />
+        <EntityTypeShape EntityType="UTL_AAModel1.ROLE_PERMISSION_ALLOWED" Width="2.25" PointX="9.125" PointY="9" />
+        <EntityTypeShape EntityType="UTL_AAModel1.USER_ROLES" Width="2" PointX="9.125" PointY="3.375" />
+        <AssociationConnector Association="UTL_AAModel1.FK_APPLICATION_MENUS_APPLICATION_MENUS" />
+        <AssociationConnector Association="UTL_AAModel1.FK_APPLICATION_MENUS_APPLICATIONS" />
+        <AssociationConnector Association="UTL_AAModel1.FK_EMPLOYEE_DENIED_PERMISSION_APPLICATION_MENUS" />
+        <AssociationConnector Association="UTL_AAModel1.FK_ROLE_PERMISSION_ALLOWED_APPLICATION_MENUS" />
+        <AssociationConnector Association="UTL_AAModel1.FK_APPLICATION_PERMISISONS_APPLICATIONS" />
+        <AssociationConnector Association="UTL_AAModel1.FK_APPLICATION_PERMISISONS_EMPLOYEES" />
+        <AssociationConnector Association="UTL_AAModel1.FK_EMPLOYEE_DENIED_PERMISSION_EMPLOYEES" />
+        <AssociationConnector Association="UTL_AAModel1.FK_USER_ROLES_EMPLOYEES" />
+        <AssociationConnector Association="UTL_AAModel1.FK_ROLE_PERMISSION_ALLOWED_ROLE" />
+        <AssociationConnector Association="UTL_AAModel1.FK_USER_ROLES_ROLES" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

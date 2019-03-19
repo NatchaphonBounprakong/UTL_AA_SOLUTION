@@ -1,0 +1,226 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section ng-app="UserProfileApplication" ng-controller="UserProfileController" ng-init="GetListUserProfile()">
+    <div class="container-fluid border mb-2">
+        <div class="m-2">
+            <div class="form-group">
+                <label for="ApplicationSelect">EN</label>
+                <input type="text" class="form-control" id="" ng-model="" placeholder="Employee Number">
+            </div>
+            <div class="form-group">
+                <label for="ApplicationSelect">Name</label>
+                <input type="text" class="form-control" id="" ng-model="" placeholder="Employee Name">
+            </div>
+        </div>
+
+    </div>
+
+    <div class="container-fluid border mb-2">
+
+        <div class="m-1">
+            <button type="button" class="btn btn-info align-right" ng-click=""><i class="fa fa-search"></i>Search</button>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalAddApp"><i class="fa fa-plus"></i>Add Employee</button>
+        </div>
+    </div>
+
+    <div class="container-fluid border mb-2">
+        <div class="m-2">
+            <table id="tableUser" class="cell-border compact stripe"></table>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalAddUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add Role</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="exampleFormControlInput1">Application Name</label>
+                            <input type="text" class="form-control" ng-model="APP_NAME" readonly>
+                            <label for="exampleFormControlInput1">Role Name</label>
+                            <input type="text" class="form-control" ng-model="_ROLE_NAME">
+                            <label for="exampleFormControlInput1">Role Description</label>
+                            <textarea type="text" class="form-control" ng-model="_ROLE_DESCRIPTION"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-click="AddApplicationRoleConfirm()">Add Role</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalViewUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">View</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="exampleFormControlInput1">First Name</label>
+                            <input type="text" class="form-control" ng-model="EMPLOYEE_FIRST_NAME" readonly>
+                            <label for="exampleFormControlInput1">Last Name</label>
+                            <input type="text" class="form-control" ng-model="EMPLOYEE_LAST_NAME" readonly>
+                            <label for="exampleFormControlInput1">Display Name</label>
+                            <input type="text" class="form-control" ng-model="EMPLOYEE_DISPLAY_NAME" readonly>
+                            <label for="exampleFormControlInput1">Department</label>
+                            <input type="text" class="form-control" ng-model="EMPLOYEE_DEPARTMENT" readonly>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalUpdateUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Edit</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="exampleFormControlInput1">First Name</label>
+                            <input type="text" class="form-control" ng-model="EMPLOYEE_FIRST_NAME">
+                            <label for="exampleFormControlInput1">Last Name</label>
+                            <input type="text" class="form-control" ng-model="EMPLOYEE_LAST_NAME">
+                            <label for="exampleFormControlInput1">Display Name</label>
+                            <input type="text" class="form-control" ng-model="EMPLOYEE_DISPLAY_NAME">
+                            <label for="exampleFormControlInput1">Department</label>
+                            <input type="text" class="form-control" ng-model="EMPLOYEE_DEPARTMENT">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-click="UpdateUserConfirm()">Confirm</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade bd-example-modal-lg" id="modalUserRole" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Role</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="m-1" ng-init="GetComboApplication()">
+                        <div class="form-group">
+                            <label for="ApplicationSelect">Application</label>
+                            <select class="form-control" id="ApplicationSelect"
+                                    ng-model="APPLICATION"
+                                    ng-options="o.APP_NAME for o in LIST_COMBO_APPLICATION track by o.APP_ID"
+                                    ng-change="ComboApplicationChange()"></select>
+                        </div>
+                    </div>
+                    <table id="userRoleContent" class="cell-border compact stripe"></table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-click="UpdateUserProfileRole()">Confirm</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade bd-example-modal-lg" id="modalUserApp" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">User Application</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group" id="">
+                            <table id="userAppContent" class="cell-border compact stripe"></table>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-click="UpdateUserProfileApplication()">Confirm</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalSaveSuccess" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Message</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Save Success
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalSaveFail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Message</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Save Fail
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</section>
+
